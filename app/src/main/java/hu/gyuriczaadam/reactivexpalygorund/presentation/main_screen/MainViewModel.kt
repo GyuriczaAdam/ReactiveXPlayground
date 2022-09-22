@@ -45,7 +45,29 @@ class MainViewModel(
                    state = state.copy(isLoading = false)
                }
                )
+        getObservableFromObject()
+        getObservableFromListOfObjects()
+    }
+
+    fun getObservableFromObject(){
         appModule.provideCreateObservableFromTask()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {task->
+                    Log.d("Tag","This is the task: ${task.description}")
+                },
+                {
+                    Log.e("TAG","onError: ${it.message}")
+                },
+                {
+                    Log.d("Tag", "Task completed")
+                }
+            )
+    }
+
+    fun getObservableFromListOfObjects(){
+        appModule.provideCreateObservableFromListOfObjectsUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

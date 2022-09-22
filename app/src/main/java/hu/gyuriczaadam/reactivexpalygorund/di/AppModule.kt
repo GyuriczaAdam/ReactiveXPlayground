@@ -4,9 +4,7 @@ package hu.gyuriczaadam.reactivexpalygorund.di
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.RequestApi
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.dto.Post
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
-import hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.CreateOperatorExampleUseCase
-import hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.GetPostsObservableUseCase
-import hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.ProvideTaskObjectUseCase
+import hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.*
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -21,10 +19,19 @@ import javax.inject.Singleton
 class AppModule (
     private val getPostsObservableUseCase: GetPostsObservableUseCase,
     private val provideTaskObjectUseCase: ProvideTaskObjectUseCase,
-    private val createOperatorExampleUseCase: CreateOperatorExampleUseCase
+    private val createOperatorExampleUseCase: CreateOperatorExampleUseCase,
+    private val getTaskListUseCase: GetTaskListUseCase,
+    private val createObservableFromListOperatorExampleUseCase: CreateObservableFromListOperatorExampleUseCase
         ) {
     fun provideGetPostsUseCase(): Observable<List<Post?>?>? {
         return getPostsObservableUseCase(provideRetrofitApi())
+    }
+    fun provideTaskList():List<Task>{
+        return getTaskListUseCase()
+    }
+
+    fun provideCreateObservableFromListOfObjectsUseCase():Observable<Task>{
+        return createObservableFromListOperatorExampleUseCase(provideTaskList())
     }
     fun provideTaskObject():Task{
         return provideTaskObjectUseCase()

@@ -34,10 +34,7 @@ fun MainScreen(
             Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = "Flatmap playgorund", textAlign = TextAlign.Center, fontSize = 20.sp)
-                /*Button(onClick = { /*TODO*/ }) {
-                    
-                }*/
+                Text(text = "ReactiveX playgorund", textAlign = TextAlign.Center, fontSize = 20.sp)
             }
             Spacer(modifier = Modifier.height(20.dp))
             LazyColumn(modifier = Modifier.fillMaxSize()) {
