@@ -1,6 +1,5 @@
 package hu.gyuriczaadam.reactivexpalygorund.domain.use_cases
 
-import android.annotation.SuppressLint
 import io.reactivex.Observable
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
 import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
@@ -10,7 +9,8 @@ import javax.inject.Singleton
 
 @ViewModelScope
 @Singleton
-class GetObservableTaskUseCase {
+class CreateOperatorExampleUseCase {
+    //Create observable from a single object
     operator fun invoke(task:Task):Observable<Task>{
         return Observable
             .create<Task> {
