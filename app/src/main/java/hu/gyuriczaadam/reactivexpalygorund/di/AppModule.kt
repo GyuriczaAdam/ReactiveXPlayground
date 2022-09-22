@@ -1,6 +1,5 @@
 package hu.gyuriczaadam.reactivexpalygorund.di
 
-
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.RequestApi
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.dto.Post
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
@@ -12,51 +11,36 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import toothpick.InjectConstructor
-import javax.inject.Singleton
 
-@Singleton
-@ViewModelScope
 @InjectConstructor
 class AppModule (
-    private val getPostsObservableUseCase: GetPostsObservableUseCase,
-    private val provideTaskObjectUseCase: ProvideTaskObjectUseCase,
-    private val createOperatorExampleUseCase: CreateOperatorExampleUseCase,
-    private val getTaskListUseCase: GetTaskListUseCase,
-    private val createObservableFromListOperatorExampleUseCase: CreateObservableFromListOperatorExampleUseCase,
-    private val justOperatorTestUseCase: JustOperatorTestUseCase,
-    private val rangeOperatorExampleUseCase: RangeOperatorExampleUseCase,
-    private val flowableExampleUseCase: FlowableExampleUseCase
+    private val reactiveXUseCases: ReactiveXUseCases
         ) {
     fun provideGetPostsUseCase(): Observable<List<Post?>?>? {
-        return getPostsObservableUseCase(provideRetrofitApi())
+        return reactiveXUseCases.getPostsObservableUseCase(provideRetrofitApi())
     }
-    fun provideTaskList():List<Task>{
-        return getTaskListUseCase()
+    private fun provideTaskList():List<Task>{
+        return reactiveXUseCases.getTaskListUseCase()
     }
-
     fun provideCreateObservableFromListOfObjectsUseCase():Observable<Task>{
-        return createObservableFromListOperatorExampleUseCase(provideTaskList())
+        return reactiveXUseCases.createObservableFromListOperatorExampleUseCase(provideTaskList())
     }
-
     fun provideFlowableExample():Flowable<Int>{
-        return flowableExampleUseCase()
+        return reactiveXUseCases.flowableExampleUseCase()
     }
-
     fun provideJustOperatorTestUseCase():Observable<String>{
-        return justOperatorTestUseCase()
+        return reactiveXUseCases.justOperatorTestUseCase()
     }
     fun provideRangeOperatorTestUseCase():Observable<Int>{
-        return rangeOperatorExampleUseCase()
+        return reactiveXUseCases.rangeOperatorExampleUseCase()
     }
-
-    fun provideTaskObject():Task{
-        return provideTaskObjectUseCase()
+    private fun provideTaskObject():Task{
+        return reactiveXUseCases.provideTaskObjectUseCase()
     }
     fun provideCreateObservableFromTask():Observable<Task>{
-        return createOperatorExampleUseCase(provideTaskObject())
+        return reactiveXUseCases.createOperatorExampleUseCase(provideTaskObject())
     }
-
-    fun provideRetrofitApi(): RequestApi {
+    private fun provideRetrofitApi(): RequestApi {
         return Retrofit.Builder()
             .baseUrl(AppConsants.BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

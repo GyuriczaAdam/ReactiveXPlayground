@@ -1,4 +1,4 @@
-package hu.gyuriczaadam.reactivexpalygorund.domain.use_cases
+package hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.operators_use_cases
 
 import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
 import io.reactivex.Observable
