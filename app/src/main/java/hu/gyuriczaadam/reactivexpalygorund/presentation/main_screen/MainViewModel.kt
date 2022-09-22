@@ -6,15 +6,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
 import hu.gyuriczaadam.reactivexpalygorund.di.AppModule
 import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.functions.Function
+import io.reactivex.functions.Predicate
+import io.reactivex.schedulers.Schedulers.computation
 import io.reactivex.schedulers.Schedulers.io
 import toothpick.InjectConstructor
-import java.util.*
 import javax.inject.Singleton
 
 @SuppressLint("CheckResult")
@@ -32,10 +34,10 @@ class MainViewModel(
            ?.flatMap { t ->
                state = state.copy(posts = t)
                Observable.fromIterable(t)
-                   .subscribeOn(Schedulers.io())
+                   .subscribeOn(io())
            }
            ?.subscribe(
-               {post->
+               {
                  },
                {
                    Log.e(AppConsants.TAG,"onError: ${it.message}")
@@ -51,11 +53,12 @@ class MainViewModel(
         getObservableFromListOfObjects()
         getJustOperatorTestUseCase()
         getRangeOperatorExampleUseCase()
+        getFlowableExample()
     }
 
-    fun getObservableFromObject(){
+    private fun getObservableFromObject(){
         appModule.provideCreateObservableFromTask()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {task->
@@ -70,13 +73,13 @@ class MainViewModel(
             )
     }
 
-    fun getJustOperatorTestUseCase(){
+    private fun getJustOperatorTestUseCase(){
         appModule.provideJustOperatorTestUseCase()
             .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {task->
-                    Log.d(AppConsants.TAG,"This is the task: ${task}")
+                    Log.d(AppConsants.TAG,"This is the task: $task")
                 },
                 {
                     Log.e(AppConsants.TAG,"onError: ${it.message}")
@@ -87,7 +90,7 @@ class MainViewModel(
             )
     }
 
-    fun getObservableFromListOfObjects(){
+    private fun getObservableFromListOfObjects(){
         appModule.provideCreateObservableFromListOfObjectsUseCase()
             .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -104,16 +107,20 @@ class MainViewModel(
             )
     }
 
-    fun getRangeOperatorExampleUseCase(){
+    private fun getRangeOperatorExampleUseCase(){
         appModule.provideRangeOperatorTestUseCase()
             .subscribeOn(io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map {
+           .map(Function {
                 Log.d(AppConsants.TAG,"A heavy task can be done $it times on: ${Thread.currentThread().name}")
-            }
+                return@Function Task("This is a heavy task with the prioriy of:",true,it)
+            })
+            .takeWhile(Predicate {
+                return@Predicate it.priority < 9
+            })
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {task->
-                    Log.d(AppConsants.TAG,"This is the task: ${task}")
+                    Log.d(AppConsants.TAG,"This is the task: $task")
                 },
                 {
                     Log.e(AppConsants.TAG,"onError: ${it.message}")
@@ -122,5 +129,20 @@ class MainViewModel(
                     Log.d(AppConsants.TAG, "Task completed")
                 }
             )
+    }
+
+    fun getFlowableExample(){
+        appModule.provideFlowableExample()
+            .subscribeOn(computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe( {task->
+                Log.d(AppConsants.TAG,"This is the task: $task")
+            },
+                {
+                    Log.e(AppConsants.TAG,"onError: ${it.message}")
+                },
+                {
+                    Log.d(AppConsants.TAG, "Task completed")
+                })
     }
 }

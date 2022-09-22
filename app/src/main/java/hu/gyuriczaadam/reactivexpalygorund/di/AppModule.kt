@@ -6,6 +6,7 @@ import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.dto.Post
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
 import hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.*
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -23,7 +24,8 @@ class AppModule (
     private val getTaskListUseCase: GetTaskListUseCase,
     private val createObservableFromListOperatorExampleUseCase: CreateObservableFromListOperatorExampleUseCase,
     private val justOperatorTestUseCase: JustOperatorTestUseCase,
-    private val rangeOperatorExampleUseCase: RangeOperatorExampleUseCase
+    private val rangeOperatorExampleUseCase: RangeOperatorExampleUseCase,
+    private val flowableExampleUseCase: FlowableExampleUseCase
         ) {
     fun provideGetPostsUseCase(): Observable<List<Post?>?>? {
         return getPostsObservableUseCase(provideRetrofitApi())
@@ -34,6 +36,10 @@ class AppModule (
 
     fun provideCreateObservableFromListOfObjectsUseCase():Observable<Task>{
         return createObservableFromListOperatorExampleUseCase(provideTaskList())
+    }
+
+    fun provideFlowableExample():Flowable<Int>{
+        return flowableExampleUseCase()
     }
 
     fun provideJustOperatorTestUseCase():Observable<String>{
