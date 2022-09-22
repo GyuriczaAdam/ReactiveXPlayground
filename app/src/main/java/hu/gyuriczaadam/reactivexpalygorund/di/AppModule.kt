@@ -21,7 +21,9 @@ class AppModule (
     private val provideTaskObjectUseCase: ProvideTaskObjectUseCase,
     private val createOperatorExampleUseCase: CreateOperatorExampleUseCase,
     private val getTaskListUseCase: GetTaskListUseCase,
-    private val createObservableFromListOperatorExampleUseCase: CreateObservableFromListOperatorExampleUseCase
+    private val createObservableFromListOperatorExampleUseCase: CreateObservableFromListOperatorExampleUseCase,
+    private val justOperatorTestUseCase: JustOperatorTestUseCase,
+    private val rangeOperatorExampleUseCase: RangeOperatorExampleUseCase
         ) {
     fun provideGetPostsUseCase(): Observable<List<Post?>?>? {
         return getPostsObservableUseCase(provideRetrofitApi())
@@ -33,6 +35,14 @@ class AppModule (
     fun provideCreateObservableFromListOfObjectsUseCase():Observable<Task>{
         return createObservableFromListOperatorExampleUseCase(provideTaskList())
     }
+
+    fun provideJustOperatorTestUseCase():Observable<String>{
+        return justOperatorTestUseCase()
+    }
+    fun provideRangeOperatorTestUseCase():Observable<Int>{
+        return rangeOperatorExampleUseCase()
+    }
+
     fun provideTaskObject():Task{
         return provideTaskObjectUseCase()
     }

@@ -24,7 +24,5 @@ class CreateObservableFromListOperatorExampleUseCase {
                     it.onComplete()
                 }
             }
-            .subscribeOn(io())
-            .observeOn(AndroidSchedulers.mainThread())
     }
 }

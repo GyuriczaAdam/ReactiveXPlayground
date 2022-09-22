@@ -19,7 +19,5 @@ class CreateOperatorExampleUseCase {
                     it.onComplete()
                 }
             }
-            .subscribeOn(io())
-            .observeOn(AndroidSchedulers.mainThread())
     }
 }
