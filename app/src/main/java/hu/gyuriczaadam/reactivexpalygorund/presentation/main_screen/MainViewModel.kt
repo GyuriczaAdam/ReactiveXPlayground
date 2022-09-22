@@ -12,6 +12,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import toothpick.InjectConstructor
+import java.util.*
 import javax.inject.Singleton
 
 @SuppressLint("CheckResult")
@@ -26,28 +27,37 @@ class MainViewModel(
     init {
         state = state.copy(isLoading = true)
        appModule.provideGetPostsUseCase()
-           ?.subscribeOn(Schedulers.io())
-           ?.observeOn(AndroidSchedulers.mainThread())
            ?.flatMap { t ->
-               Log.d("TAG","MY TEYTS: ${t.size}")
                state = state.copy(posts = t)
                Observable.fromIterable(t)
                    .subscribeOn(Schedulers.io())
            }
            ?.subscribe(
                {post->
-                   Log.d("Tag", "Post: ${post?.body}")
                  },
                {
                    Log.e("TAG","onError: ${it.message}")
+                   state = state.copy(error = "Error happend: ${it.message}")
                },
                {
                  Log.d("Tag", "Task completed")
+
                    state = state.copy(isLoading = false)
                }
                )
-    }
-    fun returnRolledNum():Int{
-        return appModule.providerRandIntUseCase()
+        appModule.provideCreateObservableFromTask()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {task->
+                    Log.d("Tag","This is the task: ${task.description}")
+                },
+                {
+                    Log.e("TAG","onError: ${it.message}")
+                },
+                {
+                    Log.d("Tag", "Task completed")
+                }
+            )
     }
 }

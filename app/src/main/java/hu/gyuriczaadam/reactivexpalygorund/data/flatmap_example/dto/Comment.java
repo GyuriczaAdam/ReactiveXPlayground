@@ -1,4 +1,4 @@
-package hu.gyuriczaadam.reactivexpalygorund.data.dto;
+package hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,7 +1,7 @@
-package hu.gyuriczaadam.reactivexpalygorund.data
+package hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example
 
-import hu.gyuriczaadam.reactivexpalygorund.data.dto.Comment
-import hu.gyuriczaadam.reactivexpalygorund.data.dto.Post
+import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.dto.Comment
+import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.dto.Post
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
