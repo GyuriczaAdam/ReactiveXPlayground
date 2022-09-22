@@ -14,10 +14,9 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function
 import io.reactivex.functions.Predicate
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers.computation
 import io.reactivex.schedulers.Schedulers.io
 import toothpick.InjectConstructor
-import java.util.*
 import javax.inject.Singleton
 
 @SuppressLint("CheckResult")
@@ -35,10 +34,10 @@ class MainViewModel(
            ?.flatMap { t ->
                state = state.copy(posts = t)
                Observable.fromIterable(t)
-                   .subscribeOn(Schedulers.io())
+                   .subscribeOn(io())
            }
            ?.subscribe(
-               {post->
+               {
                  },
                {
                    Log.e(AppConsants.TAG,"onError: ${it.message}")
@@ -54,11 +53,12 @@ class MainViewModel(
         getObservableFromListOfObjects()
         getJustOperatorTestUseCase()
         getRangeOperatorExampleUseCase()
+        getFlowableExample()
     }
 
-    fun getObservableFromObject(){
+    private fun getObservableFromObject(){
         appModule.provideCreateObservableFromTask()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {task->
@@ -73,13 +73,13 @@ class MainViewModel(
             )
     }
 
-    fun getJustOperatorTestUseCase(){
+    private fun getJustOperatorTestUseCase(){
         appModule.provideJustOperatorTestUseCase()
             .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {task->
-                    Log.d(AppConsants.TAG,"This is the task: ${task}")
+                    Log.d(AppConsants.TAG,"This is the task: $task")
                 },
                 {
                     Log.e(AppConsants.TAG,"onError: ${it.message}")
@@ -90,7 +90,7 @@ class MainViewModel(
             )
     }
 
-    fun getObservableFromListOfObjects(){
+    private fun getObservableFromListOfObjects(){
         appModule.provideCreateObservableFromListOfObjectsUseCase()
             .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -107,7 +107,7 @@ class MainViewModel(
             )
     }
 
-    fun getRangeOperatorExampleUseCase(){
+    private fun getRangeOperatorExampleUseCase(){
         appModule.provideRangeOperatorTestUseCase()
             .subscribeOn(io())
            .map(Function {
@@ -120,7 +120,7 @@ class MainViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {task->
-                    Log.d(AppConsants.TAG,"This is the task: ${task}")
+                    Log.d(AppConsants.TAG,"This is the task: $task")
                 },
                 {
                     Log.e(AppConsants.TAG,"onError: ${it.message}")
@@ -129,5 +129,20 @@ class MainViewModel(
                     Log.d(AppConsants.TAG, "Task completed")
                 }
             )
+    }
+
+    fun getFlowableExample(){
+        appModule.provideFlowableExample()
+            .subscribeOn(computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe( {task->
+                Log.d(AppConsants.TAG,"This is the task: $task")
+            },
+                {
+                    Log.e(AppConsants.TAG,"onError: ${it.message}")
+                },
+                {
+                    Log.d(AppConsants.TAG, "Task completed")
+                })
     }
 }

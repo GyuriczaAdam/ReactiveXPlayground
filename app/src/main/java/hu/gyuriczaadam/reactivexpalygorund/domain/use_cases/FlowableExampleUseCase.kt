@@ -1,0 +1,20 @@
+package hu.gyuriczaadam.reactivexpalygorund.domain.use_cases
+
+import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
+import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
+import io.reactivex.Flowable
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Singleton
+
+@ViewModelScope
+@Singleton
+class FlowableExampleUseCase {
+    operator fun invoke():Flowable<Int>{
+        //Flowable is a backpressure safe observable
+        return Flowable
+            .range(0,100000)
+            .onBackpressureBuffer()
+            .observeOn(Schedulers.computation())
+
+    }
+}
