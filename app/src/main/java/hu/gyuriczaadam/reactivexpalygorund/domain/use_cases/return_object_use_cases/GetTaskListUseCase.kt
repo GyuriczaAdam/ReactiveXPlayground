@@ -1,4 +1,4 @@
-package hu.gyuriczaadam.reactivexpalygorund.domain.use_cases
+package hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.return_object_use_cases
 
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
 import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope

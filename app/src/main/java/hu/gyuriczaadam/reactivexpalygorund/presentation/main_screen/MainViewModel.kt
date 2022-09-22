@@ -8,7 +8,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
 import hu.gyuriczaadam.reactivexpalygorund.di.AppModule
-import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,12 +16,9 @@ import io.reactivex.functions.Predicate
 import io.reactivex.schedulers.Schedulers.computation
 import io.reactivex.schedulers.Schedulers.io
 import toothpick.InjectConstructor
-import javax.inject.Singleton
 
 @SuppressLint("CheckResult")
-@Singleton
 @InjectConstructor
-@ViewModelScope
 class MainViewModel(
     private val appModule: AppModule,
 ) : ViewModel() {

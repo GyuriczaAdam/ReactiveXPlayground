@@ -1,4 +1,4 @@
-package hu.gyuriczaadam.reactivexpalygorund.domain.use_cases
+package hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.operators_use_cases
 
 import io.reactivex.Observable
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
