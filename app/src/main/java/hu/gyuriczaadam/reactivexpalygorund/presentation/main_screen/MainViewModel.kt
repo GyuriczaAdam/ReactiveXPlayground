@@ -6,11 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
 import hu.gyuriczaadam.reactivexpalygorund.di.AppModule
 import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Function
+import io.reactivex.functions.Predicate
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.schedulers.Schedulers.io
 import toothpick.InjectConstructor
@@ -107,10 +110,14 @@ class MainViewModel(
     fun getRangeOperatorExampleUseCase(){
         appModule.provideRangeOperatorTestUseCase()
             .subscribeOn(io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map {
+           .map(Function {
                 Log.d(AppConsants.TAG,"A heavy task can be done $it times on: ${Thread.currentThread().name}")
-            }
+                return@Function Task("This is a heavy task with the prioriy of:",true,it)
+            })
+            .takeWhile(Predicate {
+                return@Predicate it.priority < 9
+            })
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {task->
                     Log.d(AppConsants.TAG,"This is the task: ${task}")
