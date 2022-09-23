@@ -28,10 +28,10 @@ class AppModule (
     fun provideCreateObservableFromListOfObjectsUseCase(): Disposable? {
         return reactiveXUseCases.createObservableFromListOperatorExampleUseCase(provideTaskList())
     }
-    fun provideFlowableExample():Flowable<Int>{
+    fun provideFlowableExample(): Disposable? {
         return reactiveXUseCases.flowableExampleUseCase()
     }
-    fun provideJustOperatorTestUseCase():Observable<String>{
+    fun provideJustOperatorTestUseCase(): Disposable? {
         return reactiveXUseCases.justOperatorTestUseCase()
     }
     fun provideRangeOperatorTestUseCase(): Disposable? {
@@ -40,7 +40,7 @@ class AppModule (
     private fun provideTaskObject():Task{
         return reactiveXUseCases.provideTaskObjectUseCase()
     }
-    fun provideCreateObservableFromTask():Observable<Task>{
+    fun provideCreateObservableFromTask(): Disposable? {
         return reactiveXUseCases.createOperatorExampleUseCase(provideTaskObject())
     }
     fun provideIntervalExample():Observable<Long>{

@@ -49,43 +49,17 @@ class MainViewModel(
         getObservableFromListOfObjects()
         getJustOperatorTestUseCase()
         getRangeOperatorExampleUseCase()
-        //getFlowableExample()
+        getFlowableExample()
         getIntervalExample()
         makeFutureQuery()
     }
 
     private fun getObservableFromObject(){
         appModule.provideCreateObservableFromTask()
-            .subscribeOn(io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {task->
-                    Log.d(AppConsants.TAG,"This is the task: ${task.description}")
-                },
-                {
-                    Log.e(AppConsants.TAG,"onError: ${it.message}")
-                },
-                {
-                    Log.d(AppConsants.TAG, "Task completed")
-                }
-            )
     }
 
     private fun getJustOperatorTestUseCase(){
         appModule.provideJustOperatorTestUseCase()
-            .subscribeOn(io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {task->
-                    Log.d(AppConsants.TAG,"This is the task: $task")
-                },
-                {
-                    Log.e(AppConsants.TAG,"onError: ${it.message}")
-                },
-                {
-                    Log.d(AppConsants.TAG, "Task completed")
-                }
-            )
     }
 
     private fun getObservableFromListOfObjects(){
@@ -98,17 +72,6 @@ class MainViewModel(
 
     fun getFlowableExample(){
         appModule.provideFlowableExample()
-            .subscribeOn(computation())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe( {task->
-                Log.d(AppConsants.TAG,"This is the task: $task")
-            },
-                {
-                    Log.e(AppConsants.TAG,"onError: ${it.message}")
-                },
-                {
-                    Log.d(AppConsants.TAG, "Task completed")
-                })
     }
 
     fun getIntervalExample(){
