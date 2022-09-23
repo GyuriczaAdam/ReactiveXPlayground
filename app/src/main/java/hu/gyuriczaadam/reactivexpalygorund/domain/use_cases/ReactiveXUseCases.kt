@@ -15,5 +15,6 @@ data class ReactiveXUseCases(
     val provideTaskObjectUseCase: ProvideTaskObjectUseCase,
     val flowableExampleUseCase: FlowableExampleUseCase,
     val getPostsObservableUseCase: GetPostsObservableUseCase,
-    val intervalOperatorExampleUseCase: IntervalOperatorExampleUseCase
+    val intervalOperatorExampleUseCase: IntervalOperatorExampleUseCase,
+    val convertObservableToLiveDataExampleUseCase: ConvertObservableToLiveDataExampleUseCase
 )

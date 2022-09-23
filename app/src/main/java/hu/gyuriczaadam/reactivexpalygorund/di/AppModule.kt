@@ -1,5 +1,6 @@
 package hu.gyuriczaadam.reactivexpalygorund.di
 
+import android.arch.lifecycle.LiveData
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.RequestApi
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.dto.Post
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
@@ -10,6 +11,7 @@ import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -39,6 +41,9 @@ class AppModule (
     }
     private fun provideTaskObject():Task{
         return reactiveXUseCases.provideTaskObjectUseCase()
+    }
+    fun provideLiveDataConverterUseCase():LiveData<ResponseBody?>{
+        return reactiveXUseCases.convertObservableToLiveDataExampleUseCase(provideFromFutureRepostiory())
     }
     fun provideCreateObservableFromTask(): Disposable? {
         return reactiveXUseCases.createOperatorExampleUseCase(provideTaskObject())

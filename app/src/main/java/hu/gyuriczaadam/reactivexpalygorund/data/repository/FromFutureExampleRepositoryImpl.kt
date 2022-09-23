@@ -1,9 +1,12 @@
 package hu.gyuriczaadam.reactivexpalygorund.data.repository
 
+import android.arch.lifecycle.LiveDataReactiveStreams
+import android.arch.lifecycle.LiveData
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.RequestApi
 import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
 import hu.gyuriczaadam.reactivexpalygorund.domain.repositories.FromFutureExampleRepository
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers.io
 import okhttp3.ResponseBody
 import toothpick.InjectConstructor
 import java.util.concurrent.*
@@ -56,5 +59,15 @@ class FromFutureExampleRepositoryImpl(
                 }
             }
         return  futureObservable
+    }
+
+    override fun makeReactiveQuery(): LiveData<ResponseBody?> {
+        return LiveDataReactiveStreams
+            .fromPublisher(requestApi
+                .makeQuery()
+                !!.subscribeOn(io())
+            )
+
+
     }
 }
