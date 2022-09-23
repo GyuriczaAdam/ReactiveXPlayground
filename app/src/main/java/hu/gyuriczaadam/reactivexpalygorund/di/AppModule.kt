@@ -3,6 +3,8 @@ package hu.gyuriczaadam.reactivexpalygorund.di
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.RequestApi
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.dto.Post
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
+import hu.gyuriczaadam.reactivexpalygorund.data.repository.FromFutureExampleRepositoryImpl
+import hu.gyuriczaadam.reactivexpalygorund.domain.repositories.FromFutureExampleRepository
 import hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.*
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Flowable
@@ -42,6 +44,9 @@ class AppModule (
     }
     fun provideIntervalExample():Observable<Long>{
         return reactiveXUseCases.intervalOperatorExampleUseCase()
+    }
+    fun provideFromFutureRepostiory():FromFutureExampleRepository{
+        return FromFutureExampleRepositoryImpl(provideRetrofitApi())
     }
     private fun provideRetrofitApi(): RequestApi {
         return Retrofit.Builder()
