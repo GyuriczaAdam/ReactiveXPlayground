@@ -11,11 +11,16 @@ import hu.gyuriczaadam.reactivexpalygorund.di.AppModule
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
 import io.reactivex.functions.Predicate
 import io.reactivex.schedulers.Schedulers.computation
 import io.reactivex.schedulers.Schedulers.io
+import okhttp3.ResponseBody
 import toothpick.InjectConstructor
+import java.io.IOException
+import java.util.concurrent.Future
+
 
 @SuppressLint("CheckResult")
 @InjectConstructor
@@ -51,6 +56,7 @@ class MainViewModel(
         getRangeOperatorExampleUseCase()
         //getFlowableExample()
         getIntervalExample()
+        makeFutureQuery()
     }
 
     private fun getObservableFromObject(){
@@ -160,4 +166,23 @@ class MainViewModel(
                     Log.d(AppConsants.TAG, "Task completed")
                 })
     }
-}
+
+    fun makeFutureQuery(){
+        appModule.provideFromFutureRepostiory().makeFutureQuery()
+            .get()
+            ?.subscribeOn(io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe (
+                {
+                   Log.d(AppConsants.TAG, "onNext: ${it?.string()}");
+                },
+                {
+                        Log.e(AppConsants.TAG,"onError: ${it.message}")
+                    },
+                    {
+                        Log.d(AppConsants.TAG, "Task completed")
+                    }
+                    )
+            }
+
+    }

@@ -96,4 +96,7 @@ dependencies {
     // RxJava Call Adapter
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
 
+    //LiveData
+    //implementation "android.arch.lifecycle:extensions:1.1.1"
+
 }
