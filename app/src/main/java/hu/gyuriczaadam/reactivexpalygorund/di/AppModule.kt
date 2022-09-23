@@ -40,6 +40,9 @@ class AppModule (
     fun provideCreateObservableFromTask():Observable<Task>{
         return reactiveXUseCases.createOperatorExampleUseCase(provideTaskObject())
     }
+    fun provideIntervalExample():Observable<Long>{
+        return reactiveXUseCases.intervalOperatorExampleUseCase()
+    }
     private fun provideRetrofitApi(): RequestApi {
         return Retrofit.Builder()
             .baseUrl(AppConsants.BASE_URL)

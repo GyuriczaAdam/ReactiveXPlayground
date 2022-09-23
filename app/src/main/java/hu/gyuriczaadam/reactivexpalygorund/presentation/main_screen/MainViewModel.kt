@@ -49,7 +49,8 @@ class MainViewModel(
         getObservableFromListOfObjects()
         getJustOperatorTestUseCase()
         getRangeOperatorExampleUseCase()
-        getFlowableExample()
+        //getFlowableExample()
+        getIntervalExample()
     }
 
     private fun getObservableFromObject(){
@@ -134,6 +135,24 @@ class MainViewModel(
             .subscribe( {task->
                 Log.d(AppConsants.TAG,"This is the task: $task")
             },
+                {
+                    Log.e(AppConsants.TAG,"onError: ${it.message}")
+                },
+                {
+                    Log.d(AppConsants.TAG, "Task completed")
+                })
+    }
+
+    fun getIntervalExample(){
+        appModule.provideIntervalExample()
+            .subscribeOn(io())
+            .takeWhile {
+                return@takeWhile it <= 5
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe( {interval->
+                Log.d(AppConsants.TAG,"This is the task interval/timer: $interval")
+                },
                 {
                     Log.e(AppConsants.TAG,"onError: ${it.message}")
                 },
