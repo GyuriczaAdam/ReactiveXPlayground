@@ -6,14 +6,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
 import hu.gyuriczaadam.reactivexpalygorund.di.AppModule
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Function
-import io.reactivex.functions.Predicate
-import io.reactivex.schedulers.Schedulers.computation
 import io.reactivex.schedulers.Schedulers.io
 import toothpick.InjectConstructor
 
@@ -26,55 +22,40 @@ class MainViewModel(
         private set
     init {
         state = state.copy(isLoading = true)
-       appModule.provideGetPostsUseCase()
-           ?.flatMap { t ->
-               state = state.copy(posts = t)
-               Observable.fromIterable(t)
-                   .subscribeOn(io())
-           }
-           ?.subscribe(
-               {
-                 },
-               {
-                   Log.e(AppConsants.TAG,"onError: ${it.message}")
-                   state = state.copy(error = "Error happend: ${it.message}")
-               },
-               {
-                 Log.d(AppConsants.TAG, "Task completed")
 
-                   state = state.copy(isLoading = false)
-               }
-               )
-        getObservableFromObject()
-        getObservableFromListOfObjects()
-        getJustOperatorTestUseCase()
-        getRangeOperatorExampleUseCase()
-        getFlowableExample()
+        getDataFromApi()
+        appModule.provideCreateObservableFromTask()
+        appModule.provideJustOperatorTestUseCase()
+        appModule.provideCreateObservableFromListOfObjectsUseCase()
+        appModule.provideRangeOperatorTestUseCase()
+        appModule.provideFlowableExample()
         getIntervalExample()
         makeFutureQuery()
     }
 
-    private fun getObservableFromObject(){
-        appModule.provideCreateObservableFromTask()
+    private fun getDataFromApi(){
+        appModule.provideGetPostsUseCase()
+            ?.flatMap { t ->
+                state = state.copy(posts = t)
+                Observable.fromIterable(t)
+                    .subscribeOn(io())
+            }
+            ?.subscribe(
+                {
+                },
+                {
+                    Log.e(AppConsants.TAG,"onError: ${it.message}")
+                    state = state.copy(error = "Error happend: ${it.message}")
+                },
+                {
+                    Log.d(AppConsants.TAG, "Task completed")
+
+                    state = state.copy(isLoading = false)
+                }
+            )
     }
 
-    private fun getJustOperatorTestUseCase(){
-        appModule.provideJustOperatorTestUseCase()
-    }
-
-    private fun getObservableFromListOfObjects(){
-        appModule.provideCreateObservableFromListOfObjectsUseCase()
-    }
-
-    private fun getRangeOperatorExampleUseCase(){
-        appModule.provideRangeOperatorTestUseCase()
-    }
-
-    fun getFlowableExample(){
-        appModule.provideFlowableExample()
-    }
-
-    fun getIntervalExample(){
+    private fun getIntervalExample(){
         appModule.provideIntervalExample()
             .subscribeOn(io())
             .takeWhile {
@@ -92,14 +73,14 @@ class MainViewModel(
                 })
     }
 
-    fun makeFutureQuery(){
+    private fun makeFutureQuery(){
         appModule.provideFromFutureRepostiory().makeFutureQuery()
             .get()
             ?.subscribeOn(io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe (
                 {
-                   Log.d(AppConsants.TAG, "onNext: ${it?.string()}");
+                   Log.d(AppConsants.TAG, "onNext: ${it?.string()}")
                 },
                 {
                         Log.e(AppConsants.TAG,"onError: ${it.message}")
@@ -108,6 +89,5 @@ class MainViewModel(
                         Log.d(AppConsants.TAG, "Task completed")
                     }
                     )
-            }
-
+        }
     }
