@@ -11,16 +11,11 @@ import hu.gyuriczaadam.reactivexpalygorund.di.AppModule
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
 import io.reactivex.functions.Predicate
 import io.reactivex.schedulers.Schedulers.computation
 import io.reactivex.schedulers.Schedulers.io
-import okhttp3.ResponseBody
 import toothpick.InjectConstructor
-import java.io.IOException
-import java.util.concurrent.Future
-
 
 @SuppressLint("CheckResult")
 @InjectConstructor
@@ -95,43 +90,10 @@ class MainViewModel(
 
     private fun getObservableFromListOfObjects(){
         appModule.provideCreateObservableFromListOfObjectsUseCase()
-            .subscribeOn(io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {task->
-                    Log.d(AppConsants.TAG,"This is the task: ${task.description}")
-                },
-                {
-                    Log.e(AppConsants.TAG,"onError: ${it.message}")
-                },
-                {
-                    Log.d(AppConsants.TAG, "Task completed")
-                }
-            )
     }
 
     private fun getRangeOperatorExampleUseCase(){
         appModule.provideRangeOperatorTestUseCase()
-            .subscribeOn(io())
-           .map(Function {
-                Log.d(AppConsants.TAG,"A heavy task can be done $it times on: ${Thread.currentThread().name}")
-                return@Function Task("This is a heavy task with the prioriy of:",true,it)
-            })
-            .takeWhile(Predicate {
-                return@Predicate it.priority < 9
-            })
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {task->
-                    Log.d(AppConsants.TAG,"This is the task: $task")
-                },
-                {
-                    Log.e(AppConsants.TAG,"onError: ${it.message}")
-                },
-                {
-                    Log.d(AppConsants.TAG, "Task completed")
-                }
-            )
     }
 
     fun getFlowableExample(){
