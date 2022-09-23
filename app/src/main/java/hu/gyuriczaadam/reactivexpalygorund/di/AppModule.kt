@@ -1,5 +1,6 @@
 package hu.gyuriczaadam.reactivexpalygorund.di
 
+import android.arch.lifecycle.LiveData
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.RequestApi
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.dto.Post
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
@@ -9,6 +10,8 @@ import hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.*
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
+import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,22 +27,25 @@ class AppModule (
     private fun provideTaskList():List<Task>{
         return reactiveXUseCases.getTaskListUseCase()
     }
-    fun provideCreateObservableFromListOfObjectsUseCase():Observable<Task>{
+    fun provideCreateObservableFromListOfObjectsUseCase(): Disposable? {
         return reactiveXUseCases.createObservableFromListOperatorExampleUseCase(provideTaskList())
     }
-    fun provideFlowableExample():Flowable<Int>{
+    fun provideFlowableExample(): Disposable? {
         return reactiveXUseCases.flowableExampleUseCase()
     }
-    fun provideJustOperatorTestUseCase():Observable<String>{
+    fun provideJustOperatorTestUseCase(): Disposable? {
         return reactiveXUseCases.justOperatorTestUseCase()
     }
-    fun provideRangeOperatorTestUseCase():Observable<Int>{
+    fun provideRangeOperatorTestUseCase(): Disposable? {
         return reactiveXUseCases.rangeOperatorExampleUseCase()
     }
     private fun provideTaskObject():Task{
         return reactiveXUseCases.provideTaskObjectUseCase()
     }
-    fun provideCreateObservableFromTask():Observable<Task>{
+    fun provideLiveDataConverterUseCase():LiveData<ResponseBody?>{
+        return reactiveXUseCases.convertObservableToLiveDataExampleUseCase(provideFromFutureRepostiory())
+    }
+    fun provideCreateObservableFromTask(): Disposable? {
         return reactiveXUseCases.createOperatorExampleUseCase(provideTaskObject())
     }
     fun provideIntervalExample():Observable<Long>{
