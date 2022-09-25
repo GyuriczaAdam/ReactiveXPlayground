@@ -1,6 +1,6 @@
 package hu.gyuriczaadam.reactivexpalygorund.domain.repositories
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import java.util.concurrent.Future

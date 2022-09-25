@@ -1,6 +1,6 @@
 package hu.gyuriczaadam.reactivexpalygorund.di
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.RequestApi
 import hu.gyuriczaadam.reactivexpalygorund.data.flatmap_example.dto.Post
 import hu.gyuriczaadam.reactivexpalygorund.data.operators_example.Task
@@ -8,7 +8,6 @@ import hu.gyuriczaadam.reactivexpalygorund.data.repository.FromFutureExampleRepo
 import hu.gyuriczaadam.reactivexpalygorund.domain.repositories.FromFutureExampleRepository
 import hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.*
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import okhttp3.ResponseBody

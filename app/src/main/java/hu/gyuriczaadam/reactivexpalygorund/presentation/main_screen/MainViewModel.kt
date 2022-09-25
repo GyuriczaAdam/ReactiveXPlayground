@@ -1,24 +1,17 @@
 package hu.gyuriczaadam.reactivexpalygorund.presentation.main_screen
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
-import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-
+import androidx.lifecycle.ViewModel
 import hu.gyuriczaadam.reactivexpalygorund.di.AppModule
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers.io
-import okhttp3.ResponseBody
 import toothpick.InjectConstructor
-import java.io.IOException
 
 @SuppressLint("CheckResult")
 @InjectConstructor

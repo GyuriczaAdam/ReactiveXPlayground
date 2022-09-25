@@ -1,7 +1,6 @@
 package hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.operators_use_cases
 
-
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
 import hu.gyuriczaadam.reactivexpalygorund.domain.repositories.FromFutureExampleRepository
 import okhttp3.ResponseBody
