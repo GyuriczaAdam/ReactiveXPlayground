@@ -28,7 +28,7 @@ class MainViewModel(
         appModule.provideJustOperatorTestUseCase()
         appModule.provideCreateObservableFromListOfObjectsUseCase()
         appModule.provideRangeOperatorTestUseCase()
-        appModule.provideFlowableExample()
+        //appModule.provideFlowableExample()
         getIntervalExample()
         makeFutureQuery()
         //makeConverterExample()

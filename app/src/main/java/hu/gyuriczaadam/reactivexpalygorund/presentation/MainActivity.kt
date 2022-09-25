@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         getScope()
             .supportScopeAnnotation(ViewModelScope::class.java)
-            .supportScopeAnnotation(ActivityScope::class.java)
             .closeOnDestroy(this)
             .inject(this)
         setContent {

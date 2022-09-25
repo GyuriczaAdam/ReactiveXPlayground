@@ -1,8 +1,6 @@
 package hu.gyuriczaadam.reactivexpalygorund.di
 
-import java.lang.annotation.Documented
 
-@javax.inject.Scope
-@Documented
+@Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ActivityScope
