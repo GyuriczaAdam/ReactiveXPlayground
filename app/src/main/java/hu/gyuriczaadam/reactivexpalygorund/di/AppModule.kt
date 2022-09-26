@@ -10,6 +10,7 @@ import hu.gyuriczaadam.reactivexpalygorund.domain.use_cases.*
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Function
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -23,6 +24,15 @@ class AppModule (
     fun provideGetPostsUseCase(): Observable<List<Post?>?>? {
         return reactiveXUseCases.getPostsObservableUseCase(provideRetrofitApi())
     }
+
+    private fun provideExtractionUseCase(): Function<Task, String> {
+        return reactiveXUseCases.extractDescriptionUseCase()
+    }
+
+    fun provideMapExampleUseCase():Disposable?{
+       return reactiveXUseCases.mapTaskToStringUseCase(provideExtractionUseCase(),provideTaskList())
+    }
+
     private fun provideTaskList():List<Task>{
         return reactiveXUseCases.getTaskListUseCase()
     }

@@ -3,6 +3,7 @@ package hu.gyuriczaadam.reactivexpalygorund
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getScope()
+            .openSubScope(ViewModelScope::class.java)
             .supportScopeAnnotation(ViewModelScope::class.java)
             .closeOnDestroy(this)
             .inject(this)
@@ -37,7 +39,6 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screen.MainScreen.route){
                         MainScreen(navController,mainViewModel)
                     }
-
                 }
             }
         }
@@ -45,6 +46,6 @@ class MainActivity : ComponentActivity() {
     open fun getScope(): Scope {
         return KTP.openRootScope()
             .openSubScope(AppConsants.APPSCOPE)
-            .openSubScope(this)
+            .openSubScope(ActivityScope::class.java)
     }
 }

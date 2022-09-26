@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import hu.gyuriczaadam.reactivexpalygorund.presentation.main_screen.MainViewModel
 import hu.gyuriczaadam.reactivexpalygorund.presentation.main_screen.components.PostItem
+import hu.gyuriczaadam.reactivexpalygorund.util.LocalSpacing
 
 @Composable
 fun MainScreen(
@@ -22,25 +23,26 @@ fun MainScreen(
     viewModel: MainViewModel
 ) {
     val state = viewModel.state
+    val localspacing = LocalSpacing.current
+
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
         Column(  modifier = Modifier
             .fillMaxSize()
-            .padding(18.dp)) {
+            .padding(localspacing.spaceMedium)) {
 
             Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(text = "ReactiveX playgorund", textAlign = TextAlign.Center, fontSize = 20.sp)
             }
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(localspacing.spaceLarge))
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(state.posts){posts->
                     PostItem(post = posts!!)
                 }
             }
-
         }
     }
 

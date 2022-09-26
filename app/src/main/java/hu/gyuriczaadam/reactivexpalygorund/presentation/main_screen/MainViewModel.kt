@@ -18,8 +18,10 @@ import toothpick.InjectConstructor
 class MainViewModel(
     private val appModule: AppModule,
 ) : ViewModel(){
+
     var state by mutableStateOf(MainScreenState())
         private set
+
     init {
         state = state.copy(isLoading = true)
 
@@ -29,6 +31,7 @@ class MainViewModel(
         appModule.provideCreateObservableFromListOfObjectsUseCase()
         appModule.provideRangeOperatorTestUseCase()
         //appModule.provideFlowableExample()
+        appModule.provideMapExampleUseCase()
         getIntervalExample()
         makeFutureQuery()
         //makeConverterExample()
@@ -71,7 +74,8 @@ class MainViewModel(
                 },
                 {
                     Log.d(AppConsants.TAG, "Task completed")
-                })
+                }
+            )
     }
 
     private fun makeFutureQuery(){
@@ -85,15 +89,16 @@ class MainViewModel(
                 },
                 {
                         Log.e(AppConsants.TAG,"onError: ${it.message}")
-                    },
-                    {
+                },
+                {
                         Log.d(AppConsants.TAG, "Task completed")
-                    }
-                    )
+                }
+            )
         }
 
   fun makeConverterExample(){
         appModule.provideLiveDataConverterUseCase()
         }
+
 }
 
