@@ -30,7 +30,6 @@ fun SearchTextField(
     text: String,
     hint:String,
     onValueChange: (String) -> Unit,
-    onSearch: () -> Unit,
     modifier: Modifier = Modifier,
     shouldShowHint: Boolean = false,
 ) {
@@ -43,7 +42,6 @@ fun SearchTextField(
             singleLine = true,
             keyboardActions = KeyboardActions(
                 onSearch = {
-                    onSearch()
                     defaultKeyboardAction(ImeAction.Search)
                 }
             ),
@@ -74,9 +72,8 @@ fun SearchTextField(
             )
         }
         IconButton(
-            onClick = onSearch,
+            onClick = {  },
             modifier = Modifier.align(Alignment.CenterEnd)
-
         ) {
             Icon(
                 imageVector = Icons.Default.Search,

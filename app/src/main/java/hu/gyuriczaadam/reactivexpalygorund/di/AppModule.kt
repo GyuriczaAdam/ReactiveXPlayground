@@ -19,14 +19,15 @@ import toothpick.InjectConstructor
 
 @InjectConstructor
 class AppModule (
-    private val reactiveXUseCases: ReactiveXUseCases
+    private val reactiveXUseCases: ReactiveXUseCases,
+    private val commonModule: CommonModule
         ) {
     fun provideGetPostsUseCase(): Observable<List<Post?>?>? {
         return reactiveXUseCases.getPostsObservableUseCase(provideRetrofitApi())
     }
 
     fun provideBufferSimpleExample():Disposable?{
-        return reactiveXUseCases.bufferExampleUseCase(provideTaskList())
+        return reactiveXUseCases.bufferExampleUseCase(commonModule.provideTaskList())
     }
 
     private fun provideExtractionUseCase(): Function<Task, String> {
@@ -34,14 +35,11 @@ class AppModule (
     }
 
     fun provideMapExampleUseCase():Disposable?{
-       return reactiveXUseCases.mapTaskToStringUseCase(provideExtractionUseCase(),provideTaskList())
+       return reactiveXUseCases.mapTaskToStringUseCase(provideExtractionUseCase(),commonModule.provideTaskList())
     }
 
-    private fun provideTaskList():List<Task>{
-        return reactiveXUseCases.getTaskListUseCase()
-    }
     fun provideCreateObservableFromListOfObjectsUseCase(): Disposable? {
-        return reactiveXUseCases.createObservableFromListOperatorExampleUseCase(provideTaskList())
+        return reactiveXUseCases.createObservableFromListOperatorExampleUseCase(commonModule.provideTaskList())
     }
     fun provideFlowableExample(): Disposable? {
         return reactiveXUseCases.flowableExampleUseCase()
@@ -52,14 +50,14 @@ class AppModule (
     fun provideRangeOperatorTestUseCase(): Disposable? {
         return reactiveXUseCases.rangeOperatorExampleUseCase()
     }
-    private fun provideTaskObject():Task{
+   /* private fun provideTaskObject():Task{
         return reactiveXUseCases.provideTaskObjectUseCase()
-    }
+    }*/
     fun provideLiveDataConverterUseCase():LiveData<ResponseBody?>{
         return reactiveXUseCases.convertObservableToLiveDataExampleUseCase(provideFromFutureRepostiory())
     }
     fun provideCreateObservableFromTask(): Disposable? {
-        return reactiveXUseCases.createOperatorExampleUseCase(provideTaskObject())
+        return reactiveXUseCases.createOperatorExampleUseCase(commonModule.provideTaskObject())
     }
     fun provideIntervalExample():Observable<Long>{
         return reactiveXUseCases.intervalOperatorExampleUseCase()

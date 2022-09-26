@@ -44,7 +44,8 @@ class MainViewModel(
 
     private fun getDataFromApi(){
         appModule.provideGetPostsUseCase()
-            ?.flatMap { t ->
+                //Concat map retrtives the data in order
+            /*?.flatMap*/?.concatMap { t ->
                 state = state.copy(posts = t)
                 Observable.fromIterable(t)
                     .subscribeOn(io())

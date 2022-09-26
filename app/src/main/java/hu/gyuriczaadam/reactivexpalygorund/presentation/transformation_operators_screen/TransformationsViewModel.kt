@@ -19,8 +19,10 @@ import java.util.concurrent.TimeUnit
 class TransformationsViewModel(
     private val appModule: AppModule,
 ) : ViewModel() {
+
     var state by mutableStateOf(TransformationScreenState())
         private set
+
     var disposables = CompositeDisposable()
     var timeSinceLastRequest:Long = 0
 
@@ -64,13 +66,13 @@ class TransformationsViewModel(
             TransformationEvent.OnSearch -> {
 
             }
+            TransformationEvent.OnThrottleListClick -> {
+
+            }
         }
     }
 
     fun searchTasks(query:String){
         Log.d(AppConsants.TAG, "Searching in tasks")
     }
-
-
-
 }

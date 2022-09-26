@@ -47,14 +47,12 @@ fun TransfroamtionOperatorsScreen(
                 hint = "text goes here",
                 onValueChange = {
                     viewModel.onEvent(TransformationEvent.OnQueryChange(it))
-                },
-                onSearch = { /*TODO*/ })
+                })
+            Spacer(modifier = Modifier.height(localspacing.spaceMedium))
+            Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth().height(50.dp)) {
+                Text(text = "Throttle list test")
+            }
 
-           /*LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.posts){posts->
-                    PostItem(post = posts!!)
-                }
-            }*/
         }
     }
 
