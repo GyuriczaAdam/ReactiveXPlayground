@@ -1,15 +1,13 @@
-package hu.gyuriczaadam.reactivexpalygorund.presentation
+package hu.gyuriczaadam.reactivexpalygorund.presentation.transformation_operators_screen
 
-import android.widget.ImageButton
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.rounded.NextPlan
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +20,7 @@ import hu.gyuriczaadam.reactivexpalygorund.presentation.main_screen.components.P
 import hu.gyuriczaadam.reactivexpalygorund.util.LocalSpacing
 
 @Composable
-fun MainScreen(
+fun TransfroamtionOperatorsScreen(
     navController: NavController,
     viewModel: MainViewModel
 ) {
@@ -40,24 +38,7 @@ fun MainScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "ReactiveX playgorund", textAlign = TextAlign.Center, fontSize = 20.sp)
-                Spacer(modifier = Modifier.width(localspacing.spaceSmall))
-                IconButton(
-                    onClick = {
-                        navController.navigate(
-                            Screen.TransformationOperatorsScreen.route
-                        )
-                    },
-                    modifier = Modifier.background(MaterialTheme.colors.primary,
-                    RoundedCornerShape(5.dp)
-                )) {
-                    Row(modifier = Modifier.width(70.dp)
-                    ) {
-                        Icon(imageVector = Icons.Outlined.Add, contentDescription = "Icon",)
-                        Text(text = "Next", textAlign = TextAlign.Center)
-                    }
-                }
-
+                Text(text = "Transformations Screen", textAlign = TextAlign.Center, fontSize = 20.sp)
             }
             Spacer(modifier = Modifier.height(localspacing.spaceLarge))
             LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -90,4 +71,5 @@ fun MainScreen(
             }
         }
     }
+    
 }

@@ -12,6 +12,7 @@ import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
 import hu.gyuriczaadam.reactivexpalygorund.presentation.MainScreen
 import hu.gyuriczaadam.reactivexpalygorund.presentation.main_screen.MainViewModel
 import hu.gyuriczaadam.reactivexpalygorund.presentation.Screen
+import hu.gyuriczaadam.reactivexpalygorund.presentation.transformation_operators_screen.TransfroamtionOperatorsScreen
 import hu.gyuriczaadam.reactivexpalygorund.presentation.ui.theme.ReactiveXPalygorundTheme
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import toothpick.Scope
@@ -38,6 +39,9 @@ class MainActivity : ComponentActivity() {
                 {
                     composable(route = Screen.MainScreen.route){
                         MainScreen(navController,mainViewModel)
+                    }
+                    composable(route = Screen.TransformationOperatorsScreen.route){
+                        TransfroamtionOperatorsScreen(navController = navController, viewModel = mainViewModel)
                     }
                 }
             }

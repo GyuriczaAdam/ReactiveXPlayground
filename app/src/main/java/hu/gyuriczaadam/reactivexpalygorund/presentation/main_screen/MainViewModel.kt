@@ -10,6 +10,7 @@ import hu.gyuriczaadam.reactivexpalygorund.di.AppModule
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
 import toothpick.InjectConstructor
 
@@ -21,18 +22,21 @@ class MainViewModel(
 
     var state by mutableStateOf(MainScreenState())
         private set
+    var disposables = CompositeDisposable()
 
     init {
         state = state.copy(isLoading = true)
 
         getDataFromApi()
-        appModule.provideCreateObservableFromTask()
-        appModule.provideJustOperatorTestUseCase()
-        appModule.provideCreateObservableFromListOfObjectsUseCase()
-        appModule.provideRangeOperatorTestUseCase()
+        disposables.addAll(
+        appModule.provideCreateObservableFromTask(),
+        appModule.provideJustOperatorTestUseCase(),
+        appModule.provideCreateObservableFromListOfObjectsUseCase(),
+        appModule.provideRangeOperatorTestUseCase(),
         //appModule.provideFlowableExample()
-        appModule.provideMapExampleUseCase()
-        appModule.provideBufferSimpleExample()
+        appModule.provideMapExampleUseCase(),
+        appModule.provideBufferSimpleExample(),
+        )
         getIntervalExample()
         makeFutureQuery()
         //makeConverterExample()
@@ -101,5 +105,9 @@ class MainViewModel(
         appModule.provideLiveDataConverterUseCase()
         }
 
+    override fun onCleared() {
+        super.onCleared()
+        disposables.clear()
+    }
 }
 
