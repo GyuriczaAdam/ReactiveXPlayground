@@ -32,6 +32,7 @@ class MainViewModel(
         appModule.provideRangeOperatorTestUseCase()
         //appModule.provideFlowableExample()
         appModule.provideMapExampleUseCase()
+        appModule.provideBufferSimpleExample()
         getIntervalExample()
         makeFutureQuery()
         //makeConverterExample()

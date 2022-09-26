@@ -25,6 +25,10 @@ class AppModule (
         return reactiveXUseCases.getPostsObservableUseCase(provideRetrofitApi())
     }
 
+    fun provideBufferSimpleExample():Disposable?{
+        return reactiveXUseCases.bufferExampleUseCase(provideTaskList())
+    }
+
     private fun provideExtractionUseCase(): Function<Task, String> {
         return reactiveXUseCases.extractDescriptionUseCase()
     }
