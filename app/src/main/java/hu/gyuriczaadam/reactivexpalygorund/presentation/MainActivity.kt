@@ -12,6 +12,7 @@ import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
 import hu.gyuriczaadam.reactivexpalygorund.presentation.MainScreen
 import hu.gyuriczaadam.reactivexpalygorund.presentation.main_screen.MainViewModel
 import hu.gyuriczaadam.reactivexpalygorund.presentation.Screen
+import hu.gyuriczaadam.reactivexpalygorund.presentation.transformation_operators_screen.TransformationsViewModel
 import hu.gyuriczaadam.reactivexpalygorund.presentation.transformation_operators_screen.TransfroamtionOperatorsScreen
 import hu.gyuriczaadam.reactivexpalygorund.presentation.ui.theme.ReactiveXPalygorundTheme
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
@@ -23,6 +24,8 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var mainViewModel: MainViewModel
+    @Inject
+    lateinit var transformationsViewModel: TransformationsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getScope()
@@ -41,7 +44,7 @@ class MainActivity : ComponentActivity() {
                         MainScreen(navController,mainViewModel)
                     }
                     composable(route = Screen.TransformationOperatorsScreen.route){
-                        TransfroamtionOperatorsScreen(navController = navController, viewModel = mainViewModel)
+                        TransfroamtionOperatorsScreen(navController = navController, viewModel = transformationsViewModel)
                     }
                 }
             }

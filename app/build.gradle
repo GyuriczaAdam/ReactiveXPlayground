@@ -95,4 +95,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     // RxJava Call Adapter
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
+    // Rx Binding Library
+    implementation "com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha2"
 }

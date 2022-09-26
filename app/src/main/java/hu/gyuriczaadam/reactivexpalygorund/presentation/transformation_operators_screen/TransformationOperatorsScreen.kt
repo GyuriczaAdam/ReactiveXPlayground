@@ -17,12 +17,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import hu.gyuriczaadam.reactivexpalygorund.presentation.main_screen.MainViewModel
 import hu.gyuriczaadam.reactivexpalygorund.presentation.main_screen.components.PostItem
+import hu.gyuriczaadam.reactivexpalygorund.presentation.transformation_operators_screen.components.SearchTextField
 import hu.gyuriczaadam.reactivexpalygorund.util.LocalSpacing
 
 @Composable
 fun TransfroamtionOperatorsScreen(
     navController: NavController,
-    viewModel: MainViewModel
+    viewModel: TransformationsViewModel
 ) {
     val state = viewModel.state
     val localspacing = LocalSpacing.current
@@ -41,11 +42,19 @@ fun TransfroamtionOperatorsScreen(
                 Text(text = "Transformations Screen", textAlign = TextAlign.Center, fontSize = 20.sp)
             }
             Spacer(modifier = Modifier.height(localspacing.spaceLarge))
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            SearchTextField(
+                text = state.query,
+                hint = "text goes here",
+                onValueChange = {
+                    viewModel.onEvent(TransformationEvent.OnQueryChange(it))
+                },
+                onSearch = { /*TODO*/ })
+
+           /*LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(state.posts){posts->
                     PostItem(post = posts!!)
                 }
-            }
+            }*/
         }
     }
 
