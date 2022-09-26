@@ -10,6 +10,7 @@ import hu.gyuriczaadam.reactivexpalygorund.di.AppModule
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
 import toothpick.InjectConstructor
 
@@ -18,17 +19,24 @@ import toothpick.InjectConstructor
 class MainViewModel(
     private val appModule: AppModule,
 ) : ViewModel(){
+
     var state by mutableStateOf(MainScreenState())
         private set
+    var disposables = CompositeDisposable()
+
     init {
         state = state.copy(isLoading = true)
 
         getDataFromApi()
-        appModule.provideCreateObservableFromTask()
-        appModule.provideJustOperatorTestUseCase()
-        appModule.provideCreateObservableFromListOfObjectsUseCase()
-        appModule.provideRangeOperatorTestUseCase()
-        appModule.provideFlowableExample()
+        disposables.addAll(
+        appModule.provideCreateObservableFromTask(),
+        appModule.provideJustOperatorTestUseCase(),
+        appModule.provideCreateObservableFromListOfObjectsUseCase(),
+        appModule.provideRangeOperatorTestUseCase(),
+        //appModule.provideFlowableExample()
+        appModule.provideMapExampleUseCase(),
+        appModule.provideBufferSimpleExample(),
+        )
         getIntervalExample()
         makeFutureQuery()
         //makeConverterExample()
@@ -36,7 +44,8 @@ class MainViewModel(
 
     private fun getDataFromApi(){
         appModule.provideGetPostsUseCase()
-            ?.flatMap { t ->
+                //Concat map retrtives the data in order
+            /*?.flatMap*/?.concatMap { t ->
                 state = state.copy(posts = t)
                 Observable.fromIterable(t)
                     .subscribeOn(io())
@@ -71,7 +80,8 @@ class MainViewModel(
                 },
                 {
                     Log.d(AppConsants.TAG, "Task completed")
-                })
+                }
+            )
     }
 
     private fun makeFutureQuery(){
@@ -85,15 +95,20 @@ class MainViewModel(
                 },
                 {
                         Log.e(AppConsants.TAG,"onError: ${it.message}")
-                    },
-                    {
+                },
+                {
                         Log.d(AppConsants.TAG, "Task completed")
-                    }
-                    )
+                }
+            )
         }
 
   fun makeConverterExample(){
         appModule.provideLiveDataConverterUseCase()
         }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposables.clear()
+    }
 }
 

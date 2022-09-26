@@ -3,6 +3,7 @@ package hu.gyuriczaadam.reactivexpalygorund
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -11,6 +12,8 @@ import hu.gyuriczaadam.reactivexpalygorund.di.ViewModelScope
 import hu.gyuriczaadam.reactivexpalygorund.presentation.MainScreen
 import hu.gyuriczaadam.reactivexpalygorund.presentation.main_screen.MainViewModel
 import hu.gyuriczaadam.reactivexpalygorund.presentation.Screen
+import hu.gyuriczaadam.reactivexpalygorund.presentation.transformation_operators_screen.TransformationsViewModel
+import hu.gyuriczaadam.reactivexpalygorund.presentation.transformation_operators_screen.TransfroamtionOperatorsScreen
 import hu.gyuriczaadam.reactivexpalygorund.presentation.ui.theme.ReactiveXPalygorundTheme
 import hu.gyuriczaadam.reactivexpalygorund.util.AppConsants
 import toothpick.Scope
@@ -21,11 +24,13 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var mainViewModel: MainViewModel
+    @Inject
+    lateinit var transformationsViewModel: TransformationsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getScope()
+            .openSubScope(ViewModelScope::class.java)
             .supportScopeAnnotation(ViewModelScope::class.java)
-            .supportScopeAnnotation(ActivityScope::class.java)
             .closeOnDestroy(this)
             .inject(this)
         setContent {
@@ -38,7 +43,9 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screen.MainScreen.route){
                         MainScreen(navController,mainViewModel)
                     }
-
+                    composable(route = Screen.TransformationOperatorsScreen.route){
+                        TransfroamtionOperatorsScreen(navController = navController, viewModel = transformationsViewModel)
+                    }
                 }
             }
         }
@@ -46,6 +53,6 @@ class MainActivity : ComponentActivity() {
     open fun getScope(): Scope {
         return KTP.openRootScope()
             .openSubScope(AppConsants.APPSCOPE)
-            .openSubScope(this)
+            .openSubScope(ActivityScope::class.java)
     }
 }
