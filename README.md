@@ -7,15 +7,22 @@ This project contains examples about the different ReactiveX operators in a Jetp
 Simple operator examples:
 
 -Callable operator example
+
 -Convert observable into live data example
+
 -Flowable example
--Create operator exampla
+
+-Create operator example
+
 -Just,Interval,Range operator example
+
 
 Transformation operator examples:
 
 -Buffer operator example
+
 -Debounce operator example
+
 -Map operator example
 
 
